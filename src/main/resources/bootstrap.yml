@@ -22,3 +22,7 @@ endpoints:
     enabled: true
   health:
     sensitive: false
+    
+UserRolesConsumer:
+  ribbon:
+    listOfServers: http://localhost:9080

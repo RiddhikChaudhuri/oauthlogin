@@ -22,3 +22,7 @@ endpoints:
     enabled: true
   health:
     sensitive: false
+
+UserRolesConsumer:
+  ribbon:
+    listOfServers: localhost:8873
