@@ -14,8 +14,8 @@ public class User {
 	@Column(name = "username")
 	private String userName;
 
-	@Column(name = "password")
-	private char[] password;
+	@Column(name = "password",length=60)
+	private String password;
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
@@ -25,8 +25,19 @@ public class User {
             )
     private Set<UserRole> roles = new HashSet<>();
 
+	public User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public long getId() {
 		return id;
+	}
+
+	public User(String userName, String password) {
+		super();
+		this.userName = userName;
+		this.password = password;
 	}
 
 	public String getUserName() {
@@ -37,11 +48,11 @@ public class User {
 		this.userName = userName;
 	}
 
-	public char[] getPassword() {
+	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(char[] password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
 
@@ -53,42 +64,6 @@ public class User {
 		this.roles = roles;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + Arrays.hashCode(password);
-		result = prime * result + ((roles == null) ? 0 : roles.hashCode());
-		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		if (id != other.id)
-			return false;
-		if (!Arrays.equals(password, other.password))
-			return false;
-		if (roles == null) {
-			if (other.roles != null)
-				return false;
-		} else if (!roles.equals(other.roles))
-			return false;
-		if (userName == null) {
-			if (other.userName != null)
-				return false;
-		} else if (!userName.equals(other.userName))
-			return false;
-		return true;
-	}
 	
 	
 	

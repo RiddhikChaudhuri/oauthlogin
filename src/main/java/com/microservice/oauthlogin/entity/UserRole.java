@@ -16,7 +16,15 @@ public class UserRole {
     @Column(name = "roleid")
     private long id;
 	
-	
+	public UserRole() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+	@Column
+	private String roleName;
 	
     @Column(name = "userrolepermission")
     private String userRolePermission;

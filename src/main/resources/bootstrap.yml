@@ -1,0 +1,24 @@
+logging:
+  level:
+    org.apache.zookeeper.ClientCnxn: WARN
+
+
+server:
+  port: 9080  
+      
+spring:
+  application:
+    name: UserRolesConsumer
+  cloud:
+    zookeeper:
+      discovery:
+        enabled: true
+
+        
+endpoints:
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
+  health:
+    sensitive: false
