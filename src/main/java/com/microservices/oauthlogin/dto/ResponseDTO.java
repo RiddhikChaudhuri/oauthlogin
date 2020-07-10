@@ -4,6 +4,11 @@ import java.util.List;
 
 public class ResponseDTO {
 	
+	public ResponseDTO(List<UserRoleDto> userRoleDto) {
+		super();
+		this.userRoleDto = userRoleDto;
+	}
+
 	private List<UserRoleDto> userRoleDto;
 
 	public List<UserRoleDto> getUserRoleDto() {

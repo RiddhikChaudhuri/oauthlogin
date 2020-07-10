@@ -30,14 +30,14 @@ public class LoginRestClient {
 	 */
 	@FeignClient("UserRolesConsumer")
 	interface TheClient {
-		@RequestMapping(path = "/userRoles", method = RequestMethod.GET)
+		@RequestMapping(path = "/userRoles", method = RequestMethod.POST)
 		@ResponseBody
-		String returnUserRolesAndPermission();
+		String returnUserRolesAndPermission(String userName);
 	}
 
 	
-	 public String returnUserRolesAndPermission() {
-	        return theClient.returnUserRolesAndPermission();
+	 public String returnUserRolesAndPermission(String userName) {
+	        return theClient.returnUserRolesAndPermission(userName);
 	    }
 
 }

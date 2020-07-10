@@ -1,5 +1,6 @@
 package com.microservice.oauthlogin.service.impl;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -13,15 +14,17 @@ import org.springframework.stereotype.Service;
 import com.microservice.oauthlogin.entity.User;
 import com.microservice.oauthlogin.entity.UserRole;
 import com.microservice.oauthlogin.repository.UserRepository;
+import com.microservice.oauthlogin.repository.UserRolePermissionRepository;
 import com.microservice.oauthlogin.service.UserService;
-import com.microservices.oauthlogin.dto.ResponseDTO;
-import com.microservices.oauthlogin.dto.UserRoleDto;
 
 @Service("userService")
 public class UserServiceImpl implements UserDetailsService, UserService{
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	UserRolePermissionRepository userRolePermissionRepository;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -42,13 +45,14 @@ public class UserServiceImpl implements UserDetailsService, UserService{
     }
 
 	
-	public ResponseDTO loadUserRoleDetailsByUserName(String username) {
-		User user = userRepository.getUserByUserName(username);
+	public List loadUserRoleDetailsByUserName(String username) {
+		User user = userRepository.getUserByUserName("username");
 		
-		Set grantedAuthorities = getAuthorities(user);
+		Set<UserRole> roleByUserId = user.getRoles();
+		List<List<String>> roleListWithPermission = roleByUserId.stream().map(role -> userRolePermissionRepository.findUserRolePermissionByuserRole(role.getRoleName())).collect(Collectors.toList());
 		
 		
-		return null;
+		return roleListWithPermission;
 	}
 	
 

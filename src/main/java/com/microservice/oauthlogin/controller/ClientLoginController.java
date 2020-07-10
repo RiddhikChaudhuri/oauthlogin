@@ -38,7 +38,7 @@ public class ClientLoginController {
     public String login(HttpServletRequest request) {
 		  request.getUserPrincipal().getName();
         
-        return serviceConsumer.returnUserRolesAndPermission();
+        return serviceConsumer.returnUserRolesAndPermission(request.getUserPrincipal().getName());
     }
 
 

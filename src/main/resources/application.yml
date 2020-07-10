@@ -25,4 +25,4 @@ endpoints:
 
 UserRolesConsumer:
   ribbon:
-    listOfServers: localhost:8873
+    listOfServers: localhost:9080
