@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "ROLES")
 public class UserRole {
@@ -14,7 +16,14 @@ public class UserRole {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "roleid")
+	@JsonIgnore
 	private long id;
+
+	public UserRole(long id, String roleName) {
+		super();
+		this.id = id;
+		this.roleName = roleName;
+	}
 
 	public UserRole() {
 		super();

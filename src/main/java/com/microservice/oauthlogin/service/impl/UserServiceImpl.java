@@ -1,8 +1,12 @@
 package com.microservice.oauthlogin.service.impl;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,6 +15,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.microservice.oauthlogin.dto.ResponseDTO;
+import com.microservice.oauthlogin.dto.UserRoleDto;
 import com.microservice.oauthlogin.entity.User;
 import com.microservice.oauthlogin.entity.UserRole;
 import com.microservice.oauthlogin.repository.UserRepository;
@@ -28,10 +34,12 @@ public class UserServiceImpl implements UserDetailsService, UserService{
 
 	@SuppressWarnings("unchecked")
 	@Override
+	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
 		User user = userRepository.getUserByUserName(username);
 		
+		@SuppressWarnings("rawtypes")
 		Set grantedAuthorities = getAuthorities(user);
 		
         return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword().toString(), grantedAuthorities);
@@ -45,14 +53,24 @@ public class UserServiceImpl implements UserDetailsService, UserService{
     }
 
 	
-	public List loadUserRoleDetailsByUserName(String username) {
-		User user = userRepository.getUserByUserName("username");
+	public ResponseDTO loadUserRoleDetailsByUserName(String username) {
+		User user = userRepository.getUserByUserName("riddhik");
 		
 		Set<UserRole> roleByUserId = user.getRoles();
-		List<List<String>> roleListWithPermission = roleByUserId.stream().map(role -> userRolePermissionRepository.findUserRolePermissionByuserRole(role.getRoleName())).collect(Collectors.toList());
 		
+		Iterator<UserRole> it = roleByUserId.iterator();
+		List<UserRoleDto> userRoleDTOList= new ArrayList<UserRoleDto>();
+		while(it.hasNext()){
+			
+			UserRole ROLE= it.next();
+			UserRoleDto userRoleDTO  = new UserRoleDto(ROLE,userRolePermissionRepository.findUserRolePermissionByuserRole(ROLE));
+			userRoleDTOList.add(userRoleDTO);
+	       
+	     }
 		
-		return roleListWithPermission;
+		ResponseDTO responseDTOObject = new ResponseDTO(userRoleDTOList);
+		
+		return responseDTOObject;
 	}
 	
 

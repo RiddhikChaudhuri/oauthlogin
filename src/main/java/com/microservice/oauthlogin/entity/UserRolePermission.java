@@ -22,13 +22,14 @@ public class UserRolePermission {
 	@Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "permissionid")
+	@JsonIgnore
     private long id;
 	
 	@Column(name = "userrolepermission")
     private String userRolePermission;
 
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "roleid", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
@@ -38,6 +39,36 @@ public class UserRolePermission {
 	public UserRolePermission() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+
+	public long getId() {
+		return id;
+	}
+
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+
+	public String getUserRolePermission() {
+		return userRolePermission;
+	}
+
+
+	public void setUserRolePermission(String userRolePermission) {
+		this.userRolePermission = userRolePermission;
+	}
+
+
+	public UserRole getUserRole() {
+		return userRole;
+	}
+
+
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
 	}
 	
 	

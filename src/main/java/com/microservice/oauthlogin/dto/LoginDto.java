@@ -1,4 +1,4 @@
-package com.microservices.oauthlogin.dto;
+package com.microservice.oauthlogin.dto;
 
 public class LoginDto {
 

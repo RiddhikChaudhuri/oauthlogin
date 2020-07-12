@@ -12,5 +12,10 @@ public class OauthloginApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(OauthloginApplication.class, args);
 	}
+	
+	
+	
+	
+	
 
 }

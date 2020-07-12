@@ -1,12 +1,12 @@
 package com.microservice.oauthlogin.service;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
+
+import com.microservice.oauthlogin.dto.ResponseDTO;
 
 @Service(value = "userService")
 public interface UserService {
 	
-	public List loadUserRoleDetailsByUserName(String username);
+	public ResponseDTO loadUserRoleDetailsByUserName(String username);
 
 }

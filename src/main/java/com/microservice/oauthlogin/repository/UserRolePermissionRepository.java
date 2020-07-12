@@ -11,7 +11,7 @@ import com.microservice.oauthlogin.entity.UserRolePermission;
 @Repository
 public interface UserRolePermissionRepository extends JpaRepository<UserRolePermission, Long>{
 
-	List<String> findUserRolePermissionByuserRole(String userID);
+	List<UserRolePermission> findUserRolePermissionByuserRole(UserRole rOLE);
 	
 	
 }

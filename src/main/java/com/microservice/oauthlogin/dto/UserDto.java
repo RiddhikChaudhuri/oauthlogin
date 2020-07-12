@@ -1,5 +1,6 @@
-package com.microservices.oauthlogin.dto;
+package com.microservice.oauthlogin.dto;
 
+@com.fasterxml.jackson.annotation.JsonAutoDetect
 public class UserDto {
 	
 	private String userName;

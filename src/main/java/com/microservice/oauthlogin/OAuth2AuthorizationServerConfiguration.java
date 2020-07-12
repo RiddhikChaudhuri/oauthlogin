@@ -18,11 +18,12 @@ public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerC
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
-
 	
+	private static final String SECRET_ID = "sambuddha";
+
 
 	private static final String CLIENT_ID = "sambuddha";
-	private static final String CLIENT_SECRET = "sambuddha@123";
+	private static final String CLIENT_SECRET = "$2a$04$e/c1/RfsWuThaWFCrcCuJeoyvwCV0URN/6Pn9ZFlrtIWaU/vj/BfG";
 	private static final String GRANT_TYPE_PASSWORD = "password";
 	private static final String AUTHORIZATION_CODE = "authorization_code";
 	private static final String REFRESH_TOKEN = "refresh_token";
@@ -31,11 +32,14 @@ public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerC
 	private static final String SCOPE_EDIT = "edit";
 	private static final String TRUST = "trust";
 	
+
+	
 	
 	
 	@Bean
 	public JwtAccessTokenConverter accessTokenConverter() {
 		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+		converter.setSigningKey(SECRET_ID);
 		
 		return converter;
 	}
@@ -45,6 +49,10 @@ public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerC
 		return new JwtTokenStore(accessTokenConverter());
 	}
 
+	
+	
+	
+	
 	@Override
 	public void configure(ClientDetailsServiceConfigurer configurer) throws Exception {
 
@@ -53,13 +61,16 @@ public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerC
 				.withClient(CLIENT_ID)
 				.secret(CLIENT_SECRET)
 				.authorizedGrantTypes(GRANT_TYPE_PASSWORD, AUTHORIZATION_CODE, REFRESH_TOKEN, IMPLICIT )
-				.scopes(SCOPE_VIEW, SCOPE_EDIT, TRUST);
+				.scopes(SCOPE_VIEW, SCOPE_EDIT, TRUST)
+				.accessTokenValiditySeconds(230099)
+				
+				;
 	}
 
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
 
-        endpoints
+        endpoints.tokenStore(tokenStore())
 				.authenticationManager(authenticationManager)
 				.accessTokenConverter(accessTokenConverter());
 	}
